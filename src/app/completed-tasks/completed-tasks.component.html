@@ -1,0 +1,35 @@
+  <h1>
+    These are your completed tasks!
+  </h1>
+  
+  <div class="container">
+  
+  <br><hr><br>
+    <div *ngIf="completedList.length > 0">
+      <ul class="list-group">
+        <li *ngFor="let task of completedList" class="list-group-item">
+          <div class="row">
+  
+            <div class="col-xs-6">
+              <div class="col-xs-1">
+                <button class="btn btn-default btn-sm glyphicon glyphicon-ok" (click)="task.completed = !task.completed">
+                </button>
+              </div>
+              <div class="col-xs-1"></div>
+              <div class="col-xs-4">
+                  {{task.name}}
+              </div>
+  
+            </div>
+  
+            <div class="col-xs-6">
+              <button class="btn btn-default btn-sm glyphicon glyphicon-trash" (click)="deleteTask(task)">
+              </button>
+            </div>
+  
+          </div>
+        </li>
+      </ul>
+    </div>
+  </div>
+
