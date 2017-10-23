@@ -1,3 +1,4 @@
+import { Task } from './../task';
 import { DataService } from './../services/data.service';
 import { Component, OnInit } from '@angular/core';
 
@@ -8,13 +9,25 @@ import { Component, OnInit } from '@angular/core';
 })
 export class CompletedTasksComponent implements OnInit {
 
-  completedlist;
-  
-    constructor(private service: DataService) { }
-  
-    ngOnInit() {
-      this.service.initialize;
-      this.completedlist = this.service.getCompletedList();
-     }
+  completedlist: Task[] = [];
+  list: Task[] = [];
+
+  constructor(private service: DataService) { }
+
+  ngOnInit() {
+    this.list = this.service.retrieve();
+    console.log(this.list);
+    console.log(this.completedlist);
+    // this.completedlist = this.list;
+    // this.clasify(this.completedlist);
+  }
+
+  // clasify(list: any[]) {
+  //   for (let item of list) {
+  //     if(item.completed === true)
+  //       this.service.addElement(item,this.completedlist);
+  //   }
+  // }
+
 
 }

@@ -3,3 +3,7 @@
 body {
     padding: 14px;
 }
+
+.tachado {
+    text-decoration: line-through;
+}

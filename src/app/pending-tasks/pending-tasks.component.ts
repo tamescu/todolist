@@ -9,13 +9,26 @@ import { Component, OnInit } from '@angular/core';
 })
 export class PendingTasksComponent implements OnInit {
 
-  pendinglist;
+  pendinglist: Task[] = [];
+  list: Task[] = [];
 
   constructor(private service: DataService) { }
 
   ngOnInit() {
-    this.service.initialize;
-    this.pendinglist = this.service.getPendingList();
-   }
+    this.list = this.service.retrieve();
+    console.log(this.list);
+    console.log(this.pendinglist);
+    // for (let item of this.list) {
+    //   if(item.completed === false)
+    //     this.service.addElement(item,this.pendinglist);
+    // }
+  }
+
+    // clasify(list: any[]) {
+  //   for (let item of list) {
+  //     if(item.completed === true)
+  //       this.service.addElement(item,this.completedlist);
+  //   }
+  // }
 
 }

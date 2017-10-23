@@ -17,13 +17,12 @@ export class TodoListComponent implements OnInit {
     private service: DataService  
   ) { }
 
-  title = "'To do list app'";
-  todolist: Task[];
+  private todolist: Task[];
   name: string;
 
   ngOnInit() {
-    this.service.initialize;
-    this.retrieveList();
+    this.service.setKeyStorage;
+    this.todolist = this.service.retrieve();
   }
 
   addTask(status: boolean,taskName: string){
@@ -34,23 +33,22 @@ export class TodoListComponent implements OnInit {
     if (!this.todolist)
       this.todolist = [];
 
-    this.service.add(task,this.todolist);
-    this.retrieveList();
-  }
-
-  retrieveList() {
+    this.service.addElement(task,this.todolist);
+    this.service.store(this.todolist);
     this.todolist = this.service.retrieve();
     this.name = "";
   }
 
   deleteTask(task: Task) {
-    this.service.delete(task, this.todolist);
-    this.retrieveList();
+    this.service.deleteElement(task, this.todolist);
+    this.todolist = this.service.retrieve();
   }
 
-  changeStatus(task: Task) {
+  changeTask(task: Task) {
     task.completed = !task.completed;
+    this.service.changeElement(task, this.todolist);
   }
+
 
 
 }

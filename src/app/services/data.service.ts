@@ -1,58 +1,45 @@
 import { LocalStorageService, SessionStorageService } from 'ng2-webstorage';
-import { Task } from './../task';
 import { Injectable } from '@angular/core';
 
 @Injectable()
 export class DataService {
 
-  private todoList: Task[] = [];
-  private pendingList: Task[] = [];
-  private completedList: Task[] = [];
-  
+  private list: any[] = [];  
+  private key: string = "listKey";
+
   constructor(private storage: LocalStorageService) { }
 
-  initialize() {
-    this.storage.observe('listKey')
-    .subscribe((value) => console.log('listKey', value)); 
+  setKeyStorage() {
+    this.storage.observe(this.key)
+    .subscribe((value) => console.log(this.key, value)); 
   }
 
-  add(task: Task, list: Task[]) {
-    list.push(task);
-    this.storage.store('listKey',list);
+  addElement(element: any, list: any[]) {
+    list.push(element);
+    this.store(list);
   }
 
-  delete(task: Task, list: Task[]) {
-    let index = list.indexOf(task);
+  deleteElement(element: any, list: any[]) {
+    let index = list.indexOf(element);
     list.splice(index,1);
-    this.storage.store('listKey',list);
+    this.store(list);
+  }
+
+  changeElement(element: any, list: any[]) {
+    this.store(list);
+    this.retrieve();
   }
 
   retrieve() {
-    this.todoList = this.storage.retrieve('listKey');
-    return this.todoList;
+    let x = this.storage.retrieve(this.key);
+    if (x === null)
+      return [];
+    else
+      return x;
   }
 
-  clasify() {
-    for (let item of this.todoList) {
-      if(item.completed === false)
-        this.add(item,this.pendingList);
-        // this.pendingList.push(item);
-      else
-        this.add(item,this.completedList);
-        // this.completedList.push(item);
-    }
-  }
-
-  getPendingList(){
-    return this.pendingList;
-  }
-
-  getCompletedList(){
-    return this.completedList;
-  }
-
-  // getTodoList() {
-  //   return this.todoList;
-  // }
+  store(list: any) {
+    this.storage.store(this.key,list);
+  } 
   
 }

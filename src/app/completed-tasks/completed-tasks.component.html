@@ -6,14 +6,14 @@
 
   <br><hr><br>
   
-    <div *ngIf="completedlist.length > 0">
-      <ul class="list-group">
-        <li *ngFor="let task of completedlist" class="list-group-item">
+    <div >
+      <ul *ngIf="completedlist?.length>0" class="list-group">
+        <li *ngFor="let task of completedlist"  class="list-group-item" >
           <div class="row">
   
             <div class="col-xs-6">
               <div class="col-xs-1">
-                <button (click)="changeStatus(task)" 
+                <button (click)="changeTask(task)" 
                         class="btn btn-default btn-sm glyphicon"
                         [ngClass]="{'glyphicon-eye-close': task.completed === false,
                                     'glyphicon-eye-open': task.completed === true}">

@@ -30,12 +30,12 @@ import {Ng2Webstorage} from 'ng2-webstorage';
     FormsModule,
     RouterModule.forRoot([
       { path: '', component: TodoListComponent },
-      { path: 'add', component: TodoListComponent },
+      { path: 'all', component: TodoListComponent },
       { path: 'pending', component: PendingTasksComponent },
       { path: 'completed', component: CompletedTasksComponent },
       { path: 'not-found', component: NotFoundComponent },
-    { path: '**', redirectTo: 'not-found' }
-  ])
+      { path: '**', redirectTo: 'not-found' }
+    ])
   ],
   providers: [DataService],
   bootstrap: [AppComponent]
