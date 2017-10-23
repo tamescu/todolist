@@ -14,6 +14,7 @@ export class PendingTasksComponent implements OnInit {
   constructor(private service: DataService) { }
 
   ngOnInit() {
+    this.service.initialize;
     this.pendinglist = this.service.getPendingList();
    }
 

@@ -22,7 +22,7 @@
 
 <br><hr><br>
 
-  <div *ngIf="todolist.length > 0">
+  <div *ngIf="todolist?.length > 0">
     <ul class="list-group">
       <li *ngFor="let task of todolist" class="list-group-item">
         <div class="row">

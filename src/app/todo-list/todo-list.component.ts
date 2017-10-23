@@ -18,12 +18,12 @@ export class TodoListComponent implements OnInit {
   ) { }
 
   title = "'To do list app'";
-  todolist;
+  todolist: Task[];
   name: string;
 
   ngOnInit() {
-    this.retrieveList();
     this.service.initialize;
+    this.retrieveList();
   }
 
   addTask(status: boolean,taskName: string){
@@ -31,6 +31,9 @@ export class TodoListComponent implements OnInit {
       completed: status,
        name: taskName
     };
+    if (!this.todolist)
+      this.todolist = [];
+
     this.service.add(task,this.todolist);
     this.retrieveList();
   }
@@ -47,7 +50,6 @@ export class TodoListComponent implements OnInit {
 
   changeStatus(task: Task) {
     task.completed = !task.completed;
-    // this.edit(task);
   }
 
 

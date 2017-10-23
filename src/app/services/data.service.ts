@@ -8,9 +8,7 @@ export class DataService {
   private todoList: Task[] = [];
   private pendingList: Task[] = [];
   private completedList: Task[] = [];
-  private name: string;
-  private task: Task;
-
+  
   constructor(private storage: LocalStorageService) { }
 
   initialize() {
@@ -44,6 +42,7 @@ export class DataService {
         // this.completedList.push(item);
     }
   }
+
   getPendingList(){
     return this.pendingList;
   }
@@ -51,5 +50,9 @@ export class DataService {
   getCompletedList(){
     return this.completedList;
   }
+
+  // getTodoList() {
+  //   return this.todoList;
+  // }
   
 }
