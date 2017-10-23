@@ -31,7 +31,7 @@ export class TodoListComponent implements OnInit {
       completed: status,
        name: taskName
     };
-    this.service.add(task);
+    this.service.add(task,this.todolist);
     this.retrieveList();
   }
 
@@ -41,7 +41,7 @@ export class TodoListComponent implements OnInit {
   }
 
   deleteTask(task: Task) {
-    this.service.delete(task);
+    this.service.delete(task, this.todolist);
     this.retrieveList();
   }
 
@@ -50,9 +50,5 @@ export class TodoListComponent implements OnInit {
     // this.edit(task);
   }
 
-  // edit(task: Task) {
-  //   let index = this.todolist.indexOf(task);
-
-  // }
 
 }

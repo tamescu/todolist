@@ -8,13 +8,13 @@ import { Component, OnInit } from '@angular/core';
 })
 export class CompletedTasksComponent implements OnInit {
 
-  completedList;
+  completedlist;
   
     constructor(private service: DataService) { }
   
     ngOnInit() {
       this.service.initialize;
-      this.completedList = this.service.getCompletedList();
+      this.completedlist = this.service.getCompletedList();
      }
 
 }
