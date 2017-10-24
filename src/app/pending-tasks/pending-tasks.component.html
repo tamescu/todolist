@@ -10,8 +10,9 @@
         <ul class="list-group">
           <li *ngFor="let task of pendinglist" class="list-group-item">
             <div class="row">
+              {{task.name}}
     
-              <div class="col-xs-6">
+              <!-- <div class="col-xs-6">
                 <div class="col-xs-1">
                   <button (click)="changeTask(task)" 
                           class="btn btn-default btn-sm glyphicon"
@@ -28,10 +29,16 @@
               <div class="col-xs-6">
                 <button class="btn btn-default btn-sm glyphicon glyphicon-trash" (click)="deleteTask(task)">
                 </button>
-              </div>
+              </div> -->
     
             </div>
           </li>
         </ul>
       </div>
+
+      <div *ngIf="pendinglist.length <= 0">
+        You do not have any pending task
+      </div>
+
+
     </div>

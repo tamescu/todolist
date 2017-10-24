@@ -1,7 +1,6 @@
-import { Task } from '../task';
+import { Task } from './../task';
 // import { DataService } from './../services/data.service';
 import { Component, OnInit } from '@angular/core';
-
 import {LocalStorageService, SessionStorageService} from 'ng2-webstorage';
 import { DataService } from "../services/data.service";
 
@@ -12,17 +11,22 @@ import { DataService } from "../services/data.service";
 })
 export class TodoListComponent implements OnInit {
 
+  private todolist: Task[];
+  private currentList: Task[];
+
+  name: string;  
+
   constructor(
     private storage: LocalStorageService,
     private service: DataService  
-  ) { }
+  ) { 
+    this.service.setKeyStorage;
+  }
 
-  private todolist: Task[];
-  name: string;
 
   ngOnInit() {
-    this.service.setKeyStorage;
     this.todolist = this.service.retrieve();
+    this.currentList = this.todolist;
   }
 
   addTask(status: boolean,taskName: string){
@@ -30,25 +34,26 @@ export class TodoListComponent implements OnInit {
       completed: status,
        name: taskName
     };
-    if (!this.todolist)
-      this.todolist = [];
-
-    this.service.addElement(task,this.todolist);
-    this.service.store(this.todolist);
-    this.todolist = this.service.retrieve();
+    this.todolist = this.service.addElement(task,this.todolist);
     this.name = "";
   }
 
   deleteTask(task: Task) {
-    this.service.deleteElement(task, this.todolist);
-    this.todolist = this.service.retrieve();
+    this.todolist = this.service.deleteElement(task, this.todolist);
   }
 
   changeTask(task: Task) {
     task.completed = !task.completed;
-    this.service.changeElement(task, this.todolist);
+    this.service.store(this.todolist);
+    this.todolist = this.service.retrieve();
+    // this.checkStatus(task.completed);
   }
 
-
+  checkStatus(status: boolean) {
+    this.todolist = this.service.retrieve();
+    this.currentList = this.todolist
+       .filter(x => x.completed === status);
+    console.log("llamada a checkStatus");
+  }
 
 }

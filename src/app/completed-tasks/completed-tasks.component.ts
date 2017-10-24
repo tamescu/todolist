@@ -10,24 +10,20 @@ import { Component, OnInit } from '@angular/core';
 export class CompletedTasksComponent implements OnInit {
 
   completedlist: Task[] = [];
-  list: Task[] = [];
 
   constructor(private service: DataService) { }
 
   ngOnInit() {
-    this.list = this.service.retrieve();
-    console.log(this.list);
+    this.completedlist = this.service.retrieve()
+        .filter(x => x.completed);
     console.log(this.completedlist);
-    // this.completedlist = this.list;
-    // this.clasify(this.completedlist);
   }
 
-  // clasify(list: any[]) {
-  //   for (let item of list) {
-  //     if(item.completed === true)
-  //       this.service.addElement(item,this.completedlist);
-  //   }
-  // }
+  changeTask(task: Task) {
+    task.completed = !task.completed;
+    this.service.store(this.completedlist);
+  }
+
 
 
 }

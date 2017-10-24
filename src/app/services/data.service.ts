@@ -15,19 +15,20 @@ export class DataService {
   }
 
   addElement(element: any, list: any[]) {
+    if (!list)
+      list = [];
     list.push(element);
     this.store(list);
+    this.list = this.retrieve();
+    return this.list;
   }
 
   deleteElement(element: any, list: any[]) {
     let index = list.indexOf(element);
     list.splice(index,1);
     this.store(list);
-  }
-
-  changeElement(element: any, list: any[]) {
-    this.store(list);
-    this.retrieve();
+    this.list = this.retrieve();
+    return this.list;
   }
 
   retrieve() {
