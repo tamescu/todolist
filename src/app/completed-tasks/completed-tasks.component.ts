@@ -9,21 +9,19 @@ import { Component, OnInit } from '@angular/core';
 })
 export class CompletedTasksComponent implements OnInit {
 
-  completedlist: Task[] = [];
+  completedList: Task[] = [];
 
   constructor(private service: DataService) { }
 
   ngOnInit() {
-    this.completedlist = this.service.retrieve()
+    this.completedList = this.service.retrieve()
         .filter(x => x.completed);
-    console.log(this.completedlist);
+    console.log(this.completedList);
   }
 
   changeTask(task: Task) {
     task.completed = !task.completed;
-    this.service.store(this.completedlist);
+    this.service.store(this.completedList);
   }
-
-
 
 }

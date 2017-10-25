@@ -42,5 +42,9 @@ export class DataService {
   store(list: any) {
     this.storage.store(this.key,list);
   } 
+
+  clearAll() {
+    this.storage.clear(this.key);
+  }
   
 }

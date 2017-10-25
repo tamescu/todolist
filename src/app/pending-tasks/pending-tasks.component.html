@@ -6,9 +6,9 @@
   
     <br><hr><br>
     
-      <div *ngIf="pendinglist?.length > 0">
+      <div *ngIf="pendingList?.length > 0">
         <ul class="list-group">
-          <li *ngFor="let task of pendinglist" class="list-group-item">
+          <li *ngFor="let task of pendingList" class="list-group-item">
             <div class="row">
               {{task.name}}
     
@@ -36,7 +36,7 @@
         </ul>
       </div>
 
-      <div *ngIf="pendinglist.length <= 0">
+      <div *ngIf="pendingList.length <= 0">
         You do not have any pending task
       </div>
 

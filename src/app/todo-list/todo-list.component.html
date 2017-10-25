@@ -22,15 +22,22 @@
   <br><hr><br>
 
   <div class="row">
-      <div class="col-xs-4"></div>
-      <div class="col-xs-4">
+      <div class="col-xs-3"></div>
+      <div class="col-xs-3">
         <select #t (change)="filterList(t.value)" class="form-control form-control-lg">
           <option [value]="0">All Tasks</option>
           <option [value]="1">Pending Tasks</option>
           <option [value]="2">Completed Tasks</option>    
         </select>
+      </div>
+      <div class="col-xs-3">
+        <button (click)="clearTasks()"
+                class="btn btn-primary"
+                [disabled]="filteredList.length === 0">
+                Clear all 
+        </button>
       </div> 
-      <div class="col-xs-4"></div>
+      <div class="col-xs-3"></div>
     </div>
 
 </form>

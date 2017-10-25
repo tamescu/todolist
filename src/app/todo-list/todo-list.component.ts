@@ -10,13 +10,11 @@ import { DataService } from "../services/data.service";
 })
 export class TodoListComponent implements OnInit {
 
-  private todolist: Task[];
+  private toDoList: Task[];
   private filteredList: Task[];
   private currentOption: number;
   private done: boolean;
-
   private name: string;  
-  
 
   constructor(private storage: LocalStorageService,
               private service: DataService) { 
@@ -24,8 +22,8 @@ export class TodoListComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.todolist = this.service.retrieve();
-    this.filteredList = this.todolist;
+    this.toDoList = this.service.retrieve();
+    this.filteredList = this.toDoList;
     this.currentOption = 0;
   }
 
@@ -34,31 +32,35 @@ export class TodoListComponent implements OnInit {
       completed: status,
        name: taskName
     };
-    this.todolist = this.service.addElement(task,this.todolist);
+    this.toDoList = this.service.addElement(task,this.toDoList);
     this.name = "";
     this.filterList(this.currentOption.toString());
-    
   }
 
   deleteTask(task: Task) {
-    this.todolist = this.service.deleteElement(task, this.todolist);
+    this.toDoList = this.service.deleteElement(task, this.toDoList);
+    this.filterList(this.currentOption.toString());
+  }
+
+  clearTasks() {
+    this.service.clearAll();
     this.filterList(this.currentOption.toString());
   }
 
   changeStatus(task: Task) {
     task.completed = !task.completed;
-    this.service.store(this.todolist); 
+    this.service.store(this.toDoList); 
     this.filterList(this.currentOption.toString());
   }
 
   filterList(value: string) { 
     this.currentOption = +value;
-    this.todolist = this.service.retrieve();
+    this.toDoList = this.service.retrieve();
 
     if (this.currentOption===1 || this.currentOption===2) {
       if (this.currentOption===1) this.done = false;
       if (this.currentOption===2) this.done = true;
-      this.filteredList = this.todolist
+      this.filteredList = this.toDoList
         .filter(item => item.completed === this.done);
     } else {
       this.ngOnInit();

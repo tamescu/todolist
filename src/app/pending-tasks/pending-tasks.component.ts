@@ -9,20 +9,19 @@ import { Component, OnInit } from '@angular/core';
 })
 export class PendingTasksComponent implements OnInit {
 
-  pendinglist: Task[] = [];
+  pendingList: Task[] = [];
 
   constructor(private service: DataService) { }
 
   ngOnInit() {
-    this.pendinglist = this.service.retrieve()
+    this.pendingList = this.service.retrieve()
         .filter(x => !x.completed);
-    console.log(this.pendinglist);
   }
 
   changeTask(task: Task) {
     task.completed = !task.completed;
-    this.service.store(this.pendinglist);
-    this.pendinglist = this.service.retrieve();
+    this.service.store(this.pendingList);
+    this.pendingList = this.service.retrieve();
   }
 
 }
