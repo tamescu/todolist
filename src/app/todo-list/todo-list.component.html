@@ -24,10 +24,10 @@
   <div class="row">
       <div class="col-xs-4"></div>
       <div class="col-xs-4">
-        <select class="form-control form-control-lg">
-            <option (click)="ngOnInit()">All Tasks</option>
-            <option (click)="filterList(false)">Pending Tasks</option>
-            <option (click)="filterList(true)">Completed Tasks</option>    
+        <select #t (change)="filterList(t.value)" class="form-control form-control-lg">
+          <option [value]="0">All Tasks</option>
+          <option [value]="1">Pending Tasks</option>
+          <option [value]="2">Completed Tasks</option>    
         </select>
       </div> 
       <div class="col-xs-4"></div>

@@ -13,8 +13,10 @@ export class TodoListComponent implements OnInit {
   private todolist: Task[];
   private filteredList: Task[];
   private currentOption: number;
+  private done: boolean;
 
-  name: string;  
+  private name: string;  
+  
 
   constructor(private storage: LocalStorageService,
               private service: DataService) { 
@@ -25,11 +27,6 @@ export class TodoListComponent implements OnInit {
     this.todolist = this.service.retrieve();
     this.filteredList = this.todolist;
     this.currentOption = 0;
-    
-    console.log("llamada a ngOnInit");
-    console.log(this.todolist);
-    console.log(this.filteredList); 
-    console.log(this.currentOption);
   }
 
   addTask(status: boolean,taskName: string){
@@ -39,38 +36,32 @@ export class TodoListComponent implements OnInit {
     };
     this.todolist = this.service.addElement(task,this.todolist);
     this.name = "";
+    this.filterList(this.currentOption.toString());
+    
   }
 
   deleteTask(task: Task) {
     this.todolist = this.service.deleteElement(task, this.todolist);
+    this.filterList(this.currentOption.toString());
   }
 
   changeStatus(task: Task) {
     task.completed = !task.completed;
-    this.service.store(this.todolist);
-  
-    if (this.currentOption === 1 || this.currentOption === 2)
-      this.filterList(!task.completed);
-
-    console.log("llamada a changeStatus");
-    console.log(this.todolist);
-    console.log(this.filteredList);    
-
+    this.service.store(this.todolist); 
+    this.filterList(this.currentOption.toString());
   }
 
-  filterList(status: boolean) {
-    if (status === false) 
-      this.currentOption = 1;
-    else this.currentOption = 2;
+  filterList(value: string) { 
+    this.currentOption = +value;
     this.todolist = this.service.retrieve();
-    this.filteredList = this.todolist
-       .filter(item => item.completed === status);
 
-    console.log("llamada a filterList");
-    console.log(this.todolist);
-    console.log(this.filteredList); 
-    console.log(this.currentOption);
-
+    if (this.currentOption===1 || this.currentOption===2) {
+      if (this.currentOption===1) this.done = false;
+      if (this.currentOption===2) this.done = true;
+      this.filteredList = this.todolist
+        .filter(item => item.completed === this.done);
+    } else {
+      this.ngOnInit();
+    }
   }
-
 }
