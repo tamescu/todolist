@@ -1,5 +1,4 @@
 import { Task } from './../task';
-// import { DataService } from './../services/data.service';
 import { Component, OnInit } from '@angular/core';
 import {LocalStorageService, SessionStorageService} from 'ng2-webstorage';
 import { DataService } from "../services/data.service";
@@ -12,21 +11,25 @@ import { DataService } from "../services/data.service";
 export class TodoListComponent implements OnInit {
 
   private todolist: Task[];
-  private currentList: Task[];
+  private filteredList: Task[];
+  private currentOption: number;
 
   name: string;  
 
-  constructor(
-    private storage: LocalStorageService,
-    private service: DataService  
-  ) { 
+  constructor(private storage: LocalStorageService,
+              private service: DataService) { 
     this.service.setKeyStorage;
   }
 
-
   ngOnInit() {
     this.todolist = this.service.retrieve();
-    this.currentList = this.todolist;
+    this.filteredList = this.todolist;
+    this.currentOption = 0;
+    
+    console.log("llamada a ngOnInit");
+    console.log(this.todolist);
+    console.log(this.filteredList); 
+    console.log(this.currentOption);
   }
 
   addTask(status: boolean,taskName: string){
@@ -42,18 +45,32 @@ export class TodoListComponent implements OnInit {
     this.todolist = this.service.deleteElement(task, this.todolist);
   }
 
-  changeTask(task: Task) {
+  changeStatus(task: Task) {
     task.completed = !task.completed;
     this.service.store(this.todolist);
-    this.todolist = this.service.retrieve();
-    // this.checkStatus(task.completed);
+  
+    if (this.currentOption === 1 || this.currentOption === 2)
+      this.filterList(!task.completed);
+
+    console.log("llamada a changeStatus");
+    console.log(this.todolist);
+    console.log(this.filteredList);    
+
   }
 
-  checkStatus(status: boolean) {
+  filterList(status: boolean) {
+    if (status === false) 
+      this.currentOption = 1;
+    else this.currentOption = 2;
     this.todolist = this.service.retrieve();
-    this.currentList = this.todolist
-       .filter(x => x.completed === status);
-    console.log("llamada a checkStatus");
+    this.filteredList = this.todolist
+       .filter(item => item.completed === status);
+
+    console.log("llamada a filterList");
+    console.log(this.todolist);
+    console.log(this.filteredList); 
+    console.log(this.currentOption);
+
   }
 
 }
